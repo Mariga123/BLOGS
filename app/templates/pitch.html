@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro %}
+
+{% block content %}
+
+        <div  class="container">
+                <h2 class="text-center" id="posts">Sports Blogs</h2>
+
+            {{ macro.display(job) }}
+        </div>
+{% endblock%}

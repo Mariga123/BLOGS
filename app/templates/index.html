@@ -1,0 +1,42 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro %}
+
+{% block content %}
+
+
+<div class="mariga">
+    <h2 class="text-center mt-5" ><strong>YOUR BLOGS</strong></h2>
+    <div class="tab-content">
+        <div class="container tab-pane active" id="all"><br>
+            {{ macro.display(pitches) }}
+        </div>
+        <div class="container tab-pane fade" id="event"><br>
+            {{ macro.display(event)}}
+        </div>
+        <div class="container tab-pane fade" id="jobs"><br>
+            {{ macro.display(job) }}
+        </div>
+        <div class="container tab-pane fade" id="ads"><br>
+            {{ macro.display(advertisement) }}
+
+        </div>
+    </div>
+</div>
+<div class="container" style="text-align: center;">
+    <div class="row">
+        <div class="col-md-12 pt-3">
+            <div class="card bg-info" style="position: relative">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h2>Quote of the day..</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h2 class="quoted-author">{{ quote.author }}</h2>
+                    <p class="quoted-quote">{{ quote.quote }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
