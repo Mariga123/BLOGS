@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, abort, request
 from . import main
 from flask_login import login_required, current_user
 from ..models import User, Pitch, Comment, Upvote, Downvote
-from .form import UpdateProfile, PitchForm, CommentForm
+from .form import UpdateProfile, PitchForm, CommentForm, SubscriberForm
 from .. import db, photos
 from ..request import get_quotes
 
@@ -18,7 +18,7 @@ def index():
 @main.route('/jobs')
 def jobs():
     job = Pitch.query.filter_by(category='Job').all()
-    return render_template('pitch.html', job=job)
+    return render_template('blog.html', job=job)
 
 @main.route('/events')
 def events():
@@ -45,7 +45,7 @@ def new_pitch():
         new_pitch_object.save_p()
         return redirect(url_for('main.index'))
 
-    return render_template('create_pitch.html', form=form)
+    return render_template('create_blog.html', form=form)
 
 
 @main.route('/comment/<int:pitch_id>', methods=['POST', 'GET'])
@@ -133,3 +133,29 @@ def dislike(id):
     new_downvote = Downvote(user=current_user, pitch_id=id)
     new_downvote.save()
     return redirect(url_for('main.index', id=id))
+
+@main.route('/subscribe', methods=['GET','POST'])
+def subscriber():
+    quote = get_quotes()
+    subscriber_form=SubscriberForm()
+    # blog = Blog.query.order_by(Blog.date.desc()).all()
+
+    if subscriber_form.validate_on_submit():
+
+        subscriber= Subscriber(email=subscriber_form.email.data,name = subscriber_form.name.data)
+
+        db.session.add(subscriber)
+        db.session.commit()
+
+        mail_message("Welcome to Wb-blogs","email/subscriber",subscriber.email,subscriber=subscriber)
+
+        title= "WEB-Blogs"
+        return render_template('index.html',title=title, quote=quote)
+
+    # subscriber = pitch.query.all()
+
+    # blog = Blog.query.all()
+
+
+    return render_template('subscribe.html',subscriber_form=subscriber_form)
+

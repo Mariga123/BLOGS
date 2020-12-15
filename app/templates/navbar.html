@@ -24,6 +24,9 @@
                 <a style='margin-right:30px; color:lime; font-weight: bold' class="navbar-link"
                     href="{{url_for('auth.logout')}}"><i class="fas fa-sign-out-alt"></i>&nbsp; Log out</a>
             </li>
+            <li>
+                <a href="{{url_for( 'main.subscriber',uname=current_user.username)}} " style="text-decoration: none; ">SUBSCRIBE</a>
+            </li>
             {% else %}
             <li class="nav-item">
                 <a style='margin-right:30px' class="nav-link" href="{{url_for('auth.login')}}"
